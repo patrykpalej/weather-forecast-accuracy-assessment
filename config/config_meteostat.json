@@ -3,5 +3,5 @@
               {"name": "Rome", "id": "16235", "lat": "41.90", "lon":"10.02"},
               {"name": "London", "id": "03779", "lat": "51.51", "lon":"-0.12"}],
  "key": "bzBMzOYo",
- "API_call": "https://api.meteostat.net/v1/history/hourly?station={}&start={}&end={}&key={}"
+ "API_call": ["https://api.meteostat.net/v1/history/hourly?station={}&start={}&end={}&key={}", ["station_id", "start_day", "end_day", "key"]]
 }
