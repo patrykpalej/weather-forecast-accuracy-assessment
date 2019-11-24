@@ -3,9 +3,10 @@ Calls API to obtain the forecast and exports the results to a proper
 output form
 """
 
-from classes.WebAPI import WebAPI
+from classes.WebAPI import WebAPIDarksky
 
-webapi = WebAPI("darksky")
+webapi = WebAPIDarksky()
 
-print(webapi.config)
-print(webapi.name)
+forecast = webapi.call_api("Warsaw")
+
+print(forecast)
