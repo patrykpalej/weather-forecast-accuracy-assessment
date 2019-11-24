@@ -2,6 +2,8 @@ import os
 import json
 import requests
 
+from .DataPackage import Forecast, History
+
 
 class WebAPI:
     """
@@ -53,7 +55,7 @@ class WebAPIDarksky(WebAPI):
             = [{k: timestamp[k] for k in ["time", "temperature"]}
                for timestamp in full_forecast]
 
-        return temperature_forecast
+        return Forecast(temperature_forecast, station_name, self.name)
 
 
 class WebAPIMeteostat(WebAPI):
@@ -88,4 +90,4 @@ class WebAPIMeteostat(WebAPI):
             = [{k: timestamp[k] for k in ["time", "temperature"]}
                for timestamp in full_history]
 
-        return temperature_history
+        return History(temperature_history, station_name, self.name)
