@@ -52,7 +52,7 @@ class DataPackage:
         return datetime_timestamps, unix_timestamps, string_timestamps
 
     def get_forecasted_values(self):
-        temperature = self.raw_data["temperature"]
+        temperature = [elem["temperature"] for elem in self.raw_data]
 
         return temperature
 
