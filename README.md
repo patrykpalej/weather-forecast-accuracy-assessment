@@ -4,3 +4,23 @@ The objective of this project is to download and analyze weather data in order t
 
  
 
+## Repository content
+
+### Folders 
+
+- classes/        folder which contains all used classes
+- config/        folder with configuration files (e.g. for APIs). For APIs config files name of the file is "config__api-name_" 
+- ...
+
+### Files 
+
+- Get_Forecast.py        main script for acquiring forecast data from API
+
+- ...
+
+  
+
+  
+
+  
+
