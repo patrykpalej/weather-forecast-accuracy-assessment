@@ -26,19 +26,66 @@ class WebAPI:
 
 class WebAPIDarksky(WebAPI):
     """
-    Class to handle specifically Darksky API
+    Class to handle specifically Darksky API (for forecast)
     """
 
     def __init__(self):
         self.name = "darksky"
         super().__init__(self.name)
 
-    def call_api(self, station_name):
+    def get_hourly_forecast(self, station_name):
+        """
+        Gets hourly forecast for a given station from Darksky API
+
+        :param station_name:
+
+        :return: list of dicts with forecast for subsequent timestamps in range
+        """
+
         api_call_link_formatted = self.api_call \
             .format(self.key, self.stations[station_name]["lat"],
                     self.stations[station_name]["lon"])
 
         full_web_data = requests.get(api_call_link_formatted).json()
-        forecast = full_web_data["hourly"]["data"]
+        full_forecast = full_web_data["hourly"]["data"]
 
-        return forecast
+        temperature_forecast \
+            = [{k: timestamp[k] for k in ["time", "temperature"]}
+               for timestamp in full_forecast]
+
+        return temperature_forecast
+
+
+class WebAPIMeteostat(WebAPI):
+    """
+    Class to handle specifically Meteostat API (for historichal data)
+    """
+
+    def __init__(self):
+        self.name = "meteostat"
+        super().__init__(self.name)
+
+    def get_hourly_history(self, station_name, start_timestamp, end_timestamp):
+        """
+        Gets hourly weather history for a given station and time range
+        from Meteostat API
+
+        :param station_name:
+        :param start_timestamp: "yyyy-mm-dd" format
+        :param end_timestamp: "yyyy-mm-dd" format
+
+        :return: list of dicts with history for subsequent timestamps in range
+        """
+
+        api_call_link_formatted = self.api_call \
+            .format(self.stations[station_name]["id"], start_timestamp,
+                    end_timestamp, self.key)
+
+        full_web_data = requests.get(api_call_link_formatted).json()
+        full_history = full_web_data["data"]
+
+        temperature_history \
+            = [{k: timestamp[k] for k in ["time", "temperature"]}
+               for timestamp in full_history]
+
+        return temperature_history
