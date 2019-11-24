@@ -1,0 +1,7 @@
+{
+ "stations": {"Warsaw":{"lat": "52.23", "lon":"21.01"},
+              "Rome":{"lat": "41.90", "lon":"10.02"},
+              "London":{"lat": "51.51", "lon":"-0.12"}},
+ "key": "59b691a092438d52228d962a39f5fd69",
+ "API_call": ["https://api.darksky.net/forecast/{}/{},{}/?units=si", ["key", "lat", "lon"]]
+}
