@@ -9,9 +9,11 @@ class DataPackage:
 
     Attributes:
         - raw_data: raw data created from JSON
-        - clean_dict: contains only needed data from the raw_dict
+        - station_name:
         - API_name: name of the API from which data was acquired
-        - ?Station
+        - ts_datetime: timestamp in datetime() format
+        - ts_unix: unix timestamp
+        - ts_str: timestamp in string format
     """
 
     def __init__(self, raw_data, station_name, api_name):
