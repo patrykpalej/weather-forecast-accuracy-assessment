@@ -1,3 +1,7 @@
+from datetime import datetime
+from dateutil import parser
+
+
 class DataPackage:
     """
     Class which represents data package acquired from an API call. It may be
