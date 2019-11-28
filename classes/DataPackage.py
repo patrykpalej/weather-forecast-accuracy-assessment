@@ -1,5 +1,6 @@
 from datetime import datetime
 from dateutil import parser
+import json
 
 
 class DataPackage:
@@ -64,6 +65,15 @@ class Forecast(DataPackage):
 
     def __init__(self, raw_data, station_name, api_name):
         super().__init__(raw_data, station_name, api_name)
+        
+    def dump_forecast(self):
+        data_dict = dict()
+        data_dict["timestamp"] = self.ts_str
+        data_dict["temperature"] = self.temperature
+
+        # TODO: set file name
+        with open("data/forecasts/data.json", "w") as file:
+            json.dump(data_dict, file)
 
 
 class History(DataPackage):
