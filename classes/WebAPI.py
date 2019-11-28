@@ -26,6 +26,49 @@ class WebAPI:
         self.api_call = config["API_call"][0]
 
 
+class WebAPIMeteostat(WebAPI):
+    """
+    Class to handle specifically Meteostat API (for historichal and future
+    data)
+    """
+
+    def __init__(self):
+        self.name = "meteostat"
+        super().__init__(self.name)
+
+    def get_hourly_data(self, station_name, start_timestamp, end_timestamp,
+                        data_type):
+        """
+        Gets hourly weather history for a given station and time range
+        from Meteostat API
+
+        :param station_name:
+        :param start_timestamp: "yyyy-mm-dd" format
+        :param end_timestamp: "yyyy-mm-dd" format
+        :param data_type: history or forecast
+
+        :return: list of dicts with history for subsequent timestamps in range
+        """
+
+        api_call_link_formatted = self.api_call \
+            .format(self.stations[station_name]["id"], start_timestamp,
+                    end_timestamp, self.key)
+
+        full_web_data = requests.get(api_call_link_formatted).json()
+        weather_data = full_web_data["data"]
+
+        temperature_history \
+            = [{k: timestamp[k] for k in ["time", "temperature"]}
+               for timestamp in weather_data]
+
+        if data_type == "history":
+            return History(temperature_history, station_name, self.name)
+        elif data_type == "forecast":
+            return Forecast(temperature_history, station_name, self.name)
+        else:
+            raise ValueError("Data type invalid. Use 'forecast' or 'history'")
+
+
 class WebAPIDarksky(WebAPI):
     """
     Class to handle specifically Darksky API (for forecast)
@@ -56,38 +99,3 @@ class WebAPIDarksky(WebAPI):
                for timestamp in full_forecast]
 
         return Forecast(temperature_forecast, station_name, self.name)
-
-
-class WebAPIMeteostat(WebAPI):
-    """
-    Class to handle specifically Meteostat API (for historichal data)
-    """
-
-    def __init__(self):
-        self.name = "meteostat"
-        super().__init__(self.name)
-
-    def get_hourly_history(self, station_name, start_timestamp, end_timestamp):
-        """
-        Gets hourly weather history for a given station and time range
-        from Meteostat API
-
-        :param station_name:
-        :param start_timestamp: "yyyy-mm-dd" format
-        :param end_timestamp: "yyyy-mm-dd" format
-
-        :return: list of dicts with history for subsequent timestamps in range
-        """
-
-        api_call_link_formatted = self.api_call \
-            .format(self.stations[station_name]["id"], start_timestamp,
-                    end_timestamp, self.key)
-
-        full_web_data = requests.get(api_call_link_formatted).json()
-        full_history = full_web_data["data"]
-
-        temperature_history \
-            = [{k: timestamp[k] for k in ["time", "temperature"]}
-               for timestamp in full_history]
-
-        return History(temperature_history, station_name, self.name)
