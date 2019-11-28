@@ -22,7 +22,7 @@ class DataPackage:
         self.api_name = api_name
 
         self.ts_datetime, self.ts_unix, self.ts_str = self.convert_timestamps()
-        self.temperature = self.get_forecasted_values()
+        self.temperature = self.get_values_from_raw_data()
 
     def convert_timestamps(self):
         """
@@ -51,7 +51,7 @@ class DataPackage:
 
         return datetime_timestamps, unix_timestamps, string_timestamps
 
-    def get_forecasted_values(self):
+    def get_values_from_raw_data(self):
         temperature = [elem["temperature"] for elem in self.raw_data]
 
         return temperature
