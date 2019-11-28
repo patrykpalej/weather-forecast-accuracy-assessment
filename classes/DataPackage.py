@@ -71,7 +71,6 @@ class Forecast(DataPackage):
         data_dict["timestamp"] = self.ts_str
         data_dict["temperature"] = self.temperature
 
-        # TODO: set file name
         with open("data/forecasts/data.json", "w") as file:
             json.dump(data_dict, file)
 
