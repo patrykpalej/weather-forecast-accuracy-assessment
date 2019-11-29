@@ -1,6 +1,9 @@
 from datetime import datetime
-from dateutil import parser
 import json
+import os
+
+from functions.convert_timestamp_format import convert_from_str_timestamps, \
+    convert_from_unix_timestamps
 
 
 class DataPackage:
