@@ -60,12 +60,24 @@ class DataPackage:
 class Forecast(DataPackage):
     """
     Class to handle daily or hourly weather forecasts
+
+    Attributes:
+        - hours_ahead: list of hours ahead for subsequent forecasted values
     """
 
     def __init__(self, raw_data, station_name, api_name):
         super().__init__(raw_data, station_name, api_name)
-        
-    def dump_forecast(self):
+        self.hours_ahead = self.calculate_number_of_hours_ahead()
+
+    def calculate_number_of_hours_ahead(self):
+        hours_ahead = []
+        for ts in self.ts_unix:
+            hours_ahead.append(round((datetime.fromtimestamp(ts)
+                                      - datetime.now()).total_seconds()/3600))
+
+        return hours_ahead
+
+    def dump_forecast(self, file_name):
         data_dict = dict()
         data_dict["timestamp"] = self.ts_str
         data_dict["temperature"] = self.temperature
