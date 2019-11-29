@@ -4,4 +4,6 @@ __pycache__/
 notes/
 drafts/
 
+# temporary
 data/
+tests/
