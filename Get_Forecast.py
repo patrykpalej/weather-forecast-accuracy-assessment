@@ -3,15 +3,20 @@ Calls API to obtain the forecast and exports the results to a proper
 output form
 """
 
-from classes.WebAPI import WebAPIDarksky, WebAPIMeteostat
-
-darksky_api = WebAPIDarksky()
-forecast = darksky_api.get_hourly_forecast("Warsaw")
+from classes.WebAPI import WebAPIMeteostat
+from datetime import datetime, timedelta
 
 
 meteostat_api = WebAPIMeteostat()
-history = meteostat_api.get_hourly_history("Warsaw", "2018-01-01",
-                                           "2018-01-03")
 
-# print(forecast)
-# print(history)
+forecast_start_date = datetime.now().strftime("%Y-%m-%d")
+forecast_end_date = (datetime.now() + timedelta(days=10))\
+    .strftime("%Y-%m-%d")
+
+cities = ["Warsaw", "Rome", "London", "Moscow"]
+
+for city in cities:
+    forecast = meteostat_api.get_hourly_data(city, forecast_start_date,
+                                             forecast_end_date, "forecast")
+
+    forecast.dump_forecast(forecast_start_date + " ~ " + forecast_end_date)

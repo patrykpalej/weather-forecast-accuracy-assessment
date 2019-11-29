@@ -7,7 +7,7 @@ from .DataPackage import Forecast, History
 
 class WebAPI:
     """
-    Class of all possible web APIs such as DarkSky or Meteostat.
+    Class of all possible web APIs (e.g. Meteostat)
 
     Attributes:
         - name: name of the API
@@ -26,48 +26,18 @@ class WebAPI:
         self.api_call = config["API_call"][0]
 
 
-class WebAPIDarksky(WebAPI):
-    """
-    Class to handle specifically Darksky API (for forecast)
-    """
-
-    def __init__(self):
-        self.name = "darksky"
-        super().__init__(self.name)
-
-    def get_hourly_forecast(self, station_name):
-        """
-        Gets hourly forecast for a given station from Darksky API
-
-        :param station_name:
-
-        :return: list of dicts with forecast for subsequent timestamps in range
-        """
-
-        api_call_link_formatted = self.api_call \
-            .format(self.key, self.stations[station_name]["lat"],
-                    self.stations[station_name]["lon"])
-
-        full_web_data = requests.get(api_call_link_formatted).json()
-        full_forecast = full_web_data["hourly"]["data"]
-
-        temperature_forecast \
-            = [{k: timestamp[k] for k in ["time", "temperature"]}
-               for timestamp in full_forecast]
-
-        return Forecast(temperature_forecast, station_name, self.name)
-
-
 class WebAPIMeteostat(WebAPI):
     """
-    Class to handle specifically Meteostat API (for historichal data)
+    Class to handle specifically Meteostat API (for historichal and future
+    data)
     """
 
     def __init__(self):
         self.name = "meteostat"
         super().__init__(self.name)
 
-    def get_hourly_history(self, station_name, start_timestamp, end_timestamp):
+    def get_hourly_data(self, station_name, start_timestamp, end_timestamp,
+                        data_type):
         """
         Gets hourly weather history for a given station and time range
         from Meteostat API
@@ -75,6 +45,7 @@ class WebAPIMeteostat(WebAPI):
         :param station_name:
         :param start_timestamp: "yyyy-mm-dd" format
         :param end_timestamp: "yyyy-mm-dd" format
+        :param data_type: history or forecast
 
         :return: list of dicts with history for subsequent timestamps in range
         """
@@ -84,10 +55,15 @@ class WebAPIMeteostat(WebAPI):
                     end_timestamp, self.key)
 
         full_web_data = requests.get(api_call_link_formatted).json()
-        full_history = full_web_data["data"]
+        weather_data = full_web_data["data"]
 
         temperature_history \
             = [{k: timestamp[k] for k in ["time", "temperature"]}
-               for timestamp in full_history]
+               for timestamp in weather_data]
 
-        return History(temperature_history, station_name, self.name)
+        if data_type == "forecast":
+            return Forecast(temperature_history, station_name, self.name)
+        elif data_type == "history":
+            return History(temperature_history, station_name, self.name)
+        else:
+            raise ValueError("Data type invalid. Use 'forecast' or 'history'")
