@@ -61,10 +61,10 @@ class WebAPIMeteostat(WebAPI):
             = [{k: timestamp[k] for k in ["time", "temperature"]}
                for timestamp in weather_data]
 
-        if data_type == "history":
-            return History(temperature_history, station_name, self.name)
-        elif data_type == "forecast":
+        if data_type == "forecast":
             return Forecast(temperature_history, station_name, self.name)
+        elif data_type == "history":
+            return History(temperature_history, station_name, self.name)
         else:
             raise ValueError("Data type invalid. Use 'forecast' or 'history'")
 
