@@ -3,3 +3,5 @@ __pycache__/
 ~$*.xlsx
 notes/
 drafts/
+
+data/
