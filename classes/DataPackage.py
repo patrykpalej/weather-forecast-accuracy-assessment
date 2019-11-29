@@ -34,24 +34,20 @@ class DataPackage:
         timestamps: datetime object, unix timestamp and string timestamp
         """
 
-        original_timestamps = [elem["time"] for elem in self.raw_data]
+        orig_timestamps = [elem["time"] for elem in self.raw_data]
 
-        if type(original_timestamps[0]) == int:
-            datetime_timestamps = [datetime.fromtimestamp(elem)
-                                   for elem in original_timestamps]
-            unix_timestamps = original_timestamps
-            string_timestamps \
-                = [datetime.fromtimestamp(elem).strftime("%Y-%m-%d %H:%M:%S")
-                   for elem in original_timestamps]
-
+        if type(orig_timestamps[0]) == int:
+            datetime_timestamps = \
+                convert_from_unix_timestamps(orig_timestamps, "datetime")
+            unix_timestamps = orig_timestamps
+            string_timestamps = \
+                convert_from_unix_timestamps(orig_timestamps, "str")
         else:
-            datetime_timestamps = [parser.parse(elem)
-                                   for elem in original_timestamps]
-            unix_timestamps \
-                = [round(datetime.strptime(elem, "%Y-%m-%d %H:%M:%S")
-                         .timestamp())
-                   for elem in original_timestamps]
-            string_timestamps = original_timestamps
+            datetime_timestamps = \
+                convert_from_str_timestamps(orig_timestamps, "datetime")
+            unix_timestamps = \
+                convert_from_str_timestamps(orig_timestamps, "unix")
+            string_timestamps = orig_timestamps
 
         return datetime_timestamps, unix_timestamps, string_timestamps
 
