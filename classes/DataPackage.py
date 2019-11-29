@@ -81,9 +81,13 @@ class Forecast(DataPackage):
         data_dict = dict()
         data_dict["timestamp"] = self.ts_str
         data_dict["temperature"] = self.temperature
+        data_dict["hours_ahead"] = self.hours_ahead
 
-        # TODO: set file name
-        with open("data/forecasts/lala.json", "w") as file:
+        if not os.path.exists("data/forecasts/" + self.station_name):
+            os.mkdir("data/forecasts/" + self.station_name)
+
+        with open("data/forecasts/{}/{}.json".format(self.station_name,
+                                                     file_name), "w") as file:
             json.dump(data_dict, file)
 
 
