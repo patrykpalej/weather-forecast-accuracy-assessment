@@ -104,3 +104,19 @@ class History(DataPackage):
 
     def __init__(self, raw_data, station_name, api_name):
         super().__init__(raw_data, station_name, api_name)
+
+    def dump_history(self):
+        data_dict = dict()
+        data_dict["timestamp"] = self.ts_str
+        data_dict["unix_timestamp"] = self.ts_unix
+        data_dict["temperature"] = self.temperature
+
+        file_name = self.ts_datetime[0].strftime("%Y-%m-%d") + \
+            " ~ " + self.ts_datetime[-1].strftime("%Y-%m-%d")
+
+        if not os.path.exists("data/history/" + self.station_name):
+            os.mkdir("data/history/" + self.station_name)
+
+        with open("data/history/{}/{}.json".format(self.station_name,
+                                                   file_name), "w") as file:
+            json.dump(data_dict, file)
