@@ -80,6 +80,7 @@ class Forecast(DataPackage):
     def dump_forecast(self):
         data_dict = dict()
         data_dict["timestamp"] = self.ts_str
+        data_dict["unix_timestamp"] = self.ts_unix
         data_dict["temperature"] = self.temperature
         data_dict["hours_ahead"] = self.hours_ahead
         data_dict["current_timestamp"] = datetime.now().strftime("%Y-%m-%d "
