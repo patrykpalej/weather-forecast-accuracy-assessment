@@ -77,11 +77,16 @@ class Forecast(DataPackage):
 
         return hours_ahead
 
-    def dump_forecast(self, file_name):
+    def dump_forecast(self):
         data_dict = dict()
         data_dict["timestamp"] = self.ts_str
         data_dict["temperature"] = self.temperature
         data_dict["hours_ahead"] = self.hours_ahead
+        data_dict["current_timestamp"] = datetime.now().strftime("%Y-%m-%d "
+                                                                 "%H:00:00")
+
+        file_name = self.ts_datetime[0].strftime("%Y-%m-%d") + \
+            " ~ " + self.ts_datetime[-1].strftime("%Y-%m-%d")
 
         if not os.path.exists("data/forecasts/" + self.station_name):
             os.mkdir("data/forecasts/" + self.station_name)
