@@ -2,11 +2,10 @@
 Calls API to obtain the history and exports the results to a proper
 output form
 """
+import os
 
 from classes.WebAPI import WebAPIMeteostat
 from functions.get_forecast_period import get_forecast_period
-
-import os
 
 
 meteostat_api = WebAPIMeteostat()

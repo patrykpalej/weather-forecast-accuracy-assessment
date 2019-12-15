@@ -1,6 +1,6 @@
-from datetime import datetime
-import json
 import os
+import json
+from datetime import datetime
 
 from functions.convert_timestamp_format import convert_from_str_timestamps, \
     convert_from_unix_timestamps
