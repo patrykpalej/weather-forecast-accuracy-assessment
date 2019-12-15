@@ -19,6 +19,6 @@ cities = ["Warsaw", "Rome", "London", "Moscow"]
 for city in cities:
     forecast = meteostat_api.get_hourly_data(city, forecast_start_date,
                                              forecast_end_date, "forecast",
-                                             cut_off=n_of_days*24)
+                                             cut_off=n_of_days*24 - 5)
 
     forecast.dump_forecast()
