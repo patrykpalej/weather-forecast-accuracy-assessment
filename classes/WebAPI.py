@@ -37,7 +37,7 @@ class WebAPIMeteostat(WebAPI):
         super().__init__(self.name)
 
     def get_hourly_data(self, station_name, start_timestamp, end_timestamp,
-                        data_type):
+                        data_type, cut_off):
         """
         Gets hourly weather history for a given station and time range
         from Meteostat API
@@ -46,6 +46,7 @@ class WebAPIMeteostat(WebAPI):
         :param start_timestamp: "yyyy-mm-dd" format
         :param end_timestamp: "yyyy-mm-dd" format
         :param data_type: history or forecast
+        :param cut_off: number of hours in data package. If no then =False
 
         :return: list of dicts with history for subsequent timestamps in range
         """
@@ -60,6 +61,8 @@ class WebAPIMeteostat(WebAPI):
         temperature_history \
             = [{k: timestamp[k] for k in ["time", "temperature"]}
                for timestamp in weather_data]
+        if cut_off:
+            temperature_history = temperature_history[:cut_off]
 
         if data_type == "forecast":
             return Forecast(temperature_history, station_name, self.name)
