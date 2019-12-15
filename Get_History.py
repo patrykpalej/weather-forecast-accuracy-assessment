@@ -15,7 +15,7 @@ path_to_data = os.getcwd() + "/data/"
 history_start_date, history_end_date = get_forecast_period(path_to_data,
                                                            "London")
 
-cities = ["Warsaw", "Rome", "London", "Moscow"]
+cities = ["Warsaw", "Rome", "London", "Moscow", "New York", "Novosibirsk"]
 
 for city in cities:
     history = meteostat_api.get_hourly_data(city, history_start_date,
