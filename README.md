@@ -20,7 +20,19 @@ The objective of this project is to download and analyze weather data in order t
 
   
 
-  
+## Version history
 
-  
+v1.1
+
+- Get_Forecast.py script implemented
+- Main classes implemented: WebAPI (+ inheriting) and DataPackage (+ inheriting)
+- Configuration files prepaired
+
+v1.2
+
+- Darksky API excluded (only Meteostat left)
+- Saving forecast data to .json files implemented
+- Four cities in the pipeline: Warsaw, Rome, London and Moscow
+
+
 

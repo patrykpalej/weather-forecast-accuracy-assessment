@@ -1,6 +1,6 @@
-from datetime import datetime
-import json
 import os
+import json
+from datetime import datetime
 
 from functions.convert_timestamp_format import convert_from_str_timestamps, \
     convert_from_unix_timestamps
@@ -77,11 +77,17 @@ class Forecast(DataPackage):
 
         return hours_ahead
 
-    def dump_forecast(self, file_name):
+    def dump_forecast(self):
         data_dict = dict()
         data_dict["timestamp"] = self.ts_str
+        data_dict["unix_timestamp"] = self.ts_unix
         data_dict["temperature"] = self.temperature
         data_dict["hours_ahead"] = self.hours_ahead
+        data_dict["current_timestamp"] = datetime.now().strftime("%Y-%m-%d "
+                                                                 "%H:00:00")
+
+        file_name = self.ts_datetime[0].strftime("%Y-%m-%d") + \
+            " ~ " + self.ts_datetime[-1].strftime("%Y-%m-%d")
 
         if not os.path.exists("data/forecasts/" + self.station_name):
             os.mkdir("data/forecasts/" + self.station_name)
@@ -98,3 +104,19 @@ class History(DataPackage):
 
     def __init__(self, raw_data, station_name, api_name):
         super().__init__(raw_data, station_name, api_name)
+
+    def dump_history(self):
+        data_dict = dict()
+        data_dict["timestamp"] = self.ts_str
+        data_dict["unix_timestamp"] = self.ts_unix
+        data_dict["temperature"] = self.temperature
+
+        file_name = self.ts_datetime[0].strftime("%Y-%m-%d") + \
+            " ~ " + self.ts_datetime[-1].strftime("%Y-%m-%d")
+
+        if not os.path.exists("data/history/" + self.station_name):
+            os.mkdir("data/history/" + self.station_name)
+
+        with open("data/history/{}/{}.json".format(self.station_name,
+                                                   file_name), "w") as file:
+            json.dump(data_dict, file)
