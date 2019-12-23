@@ -25,3 +25,11 @@ def get_forecast_start_date(path_to_data, location):
         = start_date.strftime("%Y-%m-%d")
 
     return start_date_str
+
+
+def get_forecast_limits(forecast_dict):
+    """
+    Takes a dictionary with a forecast and returns first and last timestamps
+    """
+
+    return 1
