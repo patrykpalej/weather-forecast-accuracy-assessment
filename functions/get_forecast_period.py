@@ -31,5 +31,7 @@ def get_forecast_limits(forecast_dict):
     """
     Takes a dictionary with a forecast and returns first and last timestamps
     """
+    start_timestamp = forecast_dict["timestamp"][0]
+    end_timestamp = forecast_dict["timestamp"][-1]
 
-    return 1
+    return start_timestamp, end_timestamp
