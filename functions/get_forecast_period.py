@@ -10,7 +10,7 @@ def get_forecast_start_date(path_to_data, location):
     directory_to_search = path_to_data + "/forecasts/" + location
 
     json_files = [directory_to_search + "/" + file_name
-                  for file_name in list(os.walk(directory_to_search))[0][2]]
+                  for file_name in os.listdir(directory_to_search)]
 
     start_dates = list()
 
