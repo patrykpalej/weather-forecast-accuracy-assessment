@@ -3,14 +3,14 @@ import json
 from datetime import datetime
 
 
-def get_forecast_start_date(path_to_data, city_name):
+def get_forecast_start_date(path_to_data, location):
     """
-    Gets first timestamp from forecasts for a given city
+    Gets first timestamp from forecasts for a given location
     """
-    directory_to_search = path_to_data + "/forecasts/" + city_name
+    directory_to_search = path_to_data + "/forecasts/" + location
 
     json_files = [directory_to_search + "/" + file_name
-                  for file_name in list(os.walk(directory_to_search))[0][2]]
+                  for file_name in os.listdir(directory_to_search)]
 
     start_dates = list()
 
@@ -25,3 +25,13 @@ def get_forecast_start_date(path_to_data, city_name):
         = start_date.strftime("%Y-%m-%d")
 
     return start_date_str
+
+
+def get_forecast_limits(forecast_dict):
+    """
+    Takes a dictionary with a forecast and returns first and last timestamps
+    """
+    start_timestamp = forecast_dict["timestamp"][0]
+    end_timestamp = forecast_dict["timestamp"][-1]
+
+    return start_timestamp, end_timestamp
