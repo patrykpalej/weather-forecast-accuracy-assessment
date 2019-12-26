@@ -13,8 +13,7 @@ def get_history(location):
     meteostat_api = WebAPIMeteostat()
 
     path_to_data = os.getcwd() + "/data/"
-    history_start_date = get_forecast_start_date(path_to_data,
-                                                 "London")
+    history_start_date = get_forecast_start_date(path_to_data, location)
     history_end_date = "{}-{}-{}".\
         format(datetime.now().year, datetime.now().month, datetime.now().day)
 
