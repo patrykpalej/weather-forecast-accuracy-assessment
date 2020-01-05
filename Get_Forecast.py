@@ -14,7 +14,7 @@ forecast_start_date = datetime.now().strftime("%Y-%m-%d")
 forecast_end_date = (datetime.now() + timedelta(days=n_of_days))\
     .strftime("%Y-%m-%d")
 
-locations = ["Warsaw", "Rome", "London", "Moscow", "New York", "Novosibirsk"]
+locations = list(meteostat_api.stations.keys())
 
 for location in locations:
     forecast = meteostat_api.get_hourly_data(location, forecast_start_date,
