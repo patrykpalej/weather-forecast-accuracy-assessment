@@ -15,7 +15,8 @@ from functions.collation_utils import clean_subfolders, get_history_subset, \
 clean_subfolders(os.getcwd() + "/data/history/")
 clean_subfolders(os.getcwd() + "/data/collations/")
 
-locations = ["Warsaw", "Rome", "London", "Moscow", "New York", "Novosibirsk"]
+locations = os.listdir(os.getcwd() + "/data/forecasts")
+
 for location in locations:
     get_history(location)
 
