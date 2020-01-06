@@ -3,10 +3,11 @@ Takes files with collations and creates plots based on them
 """
 import os
 import pandas as pd
+import matplotlib.pyplot as plt 
 
 from functions.createPlots import forecast_vs_actual_separate, \
-    forecast_vs_actual_averaged, r2_vs_time_separate, r2_vs_time_averaged, \
-    r2_vs_location, r2_vs_location_and_time
+    forecast_vs_actual_averaged, corr_vs_time_separate, \
+    corr_vs_time_averaged, corr_vs_location, corr_vs_location_and_time
 
 
 locations = os.listdir(os.getcwd() + "/data/collations/")
@@ -24,7 +25,9 @@ for location in locations:
 
 forecast_vs_actual_separate(collations_dict, file_name[:-4])
 forecast_vs_actual_averaged(collations_dict, file_name[:-4])
-r2_vs_time_separate(collations_dict, file_name[:-4])
-r2_vs_time_averaged(collations_dict, file_name[:-4])
-r2_vs_location(collations_dict, file_name[:-4])
-r2_vs_location_and_time(collations_dict, file_name[:-4])
+corr_vs_time_separate(collations_dict, file_name[:-4])
+corr_vs_time_averaged(collations_dict, file_name[:-4])
+corr_vs_location(collations_dict, file_name[:-4])
+corr_vs_location_and_time(collations_dict, file_name[:-4])
+
+plt.close('all')
