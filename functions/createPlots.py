@@ -2,6 +2,7 @@
 This file contains functions which generate subsequent types of plots
 """
 import os
+import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import pearsonr
 
@@ -176,7 +177,36 @@ def corr_vs_time_averaged(collations_dict, period):
 
 
 def corr_vs_location(collations_dict, period):
-    pass
+    locations = list(collations_dict.keys())
+    correlations = []
+
+    for loc in locations:
+        forecasted = collations_dict[loc]["forecast_temperature"].tolist()
+        historical = collations_dict[loc]["history_temperature"].tolist()
+        corr_coef = pearsonr(forecasted, historical)[0]
+        correlations.append(corr_coef)
+
+    ordered_values = sorted(correlations)
+    ordered_locations = [locations[i] for i in np.argsort(correlations)]
+
+    fig = plt.figure(figsize=(15, 10))
+    ax = fig.add_subplot(1, 1, 1)
+    plt.bar([1, 2, 3, 4, 5, 6], ordered_values)
+    plt.title("Average Pearson correlation coefficient\nfor subsequent "
+              "locations", fontsize=32, pad=24)
+    ax.set_xlabel("Locations", {"fontsize": 20})
+    ax.set_ylabel("Average Pearson correlation coefficient [-]",
+                  {"fontsize": 20})
+    ax.tick_params(axis="both", which="both", labelsize=14)
+    plt.xlim([0, 7])
+    plt.ylim([0, 1.1])
+    ax.set_xticks([1, 2, 3, 4, 5, 6])
+    ax.set_xticklabels(ordered_locations)
+    ax.set_axisbelow(True)
+    plt.grid(axis='y')
+
+    results_dir = os.getcwd() + "/results/" + period
+    plt.savefig(Figure=fig, fname=results_dir + "/corr_vs_location.png")
 
 
 def corr_vs_location_and_time(collations_dict, period):
