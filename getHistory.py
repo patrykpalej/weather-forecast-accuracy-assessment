@@ -6,7 +6,7 @@ import os
 from datetime import datetime
 
 from classes.WebAPI import WebAPIMeteostat
-from functions.get_forecast_period import get_forecast_start_date
+from functions.getForecastPeriod import get_forecast_start_date
 
 
 def get_history(location):
