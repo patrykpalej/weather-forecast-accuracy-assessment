@@ -7,21 +7,15 @@ import json
 import pandas as pd
 
 from getHistory import get_history
-from functions.get_forecast_period import get_forecast_limits
-from functions.collation_utils import clean_subfolders, get_history_subset, \
+from functions.getForecastPeriod import get_forecast_limits
+from functions.collationUtils import get_history_subset, \
     shorten_forecast_dict, collate_dicts
 
 
-clean_subfolders(os.getcwd() + "/data/history/")
-clean_subfolders(os.getcwd() + "/data/collations/")
+def make_collation(location):
 
-locations = os.listdir(os.getcwd() + "/data/forecasts")
-
-for location in locations:
     get_history(location)
 
-
-for location in locations:
     forecast_dir = os.getcwd() + "/data/forecasts/" + location
     forecast_jsons = [forecast_dir + "/" + file_name
                       for file_name in os.listdir(forecast_dir)]
