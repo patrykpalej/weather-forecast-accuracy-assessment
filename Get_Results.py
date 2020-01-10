@@ -5,12 +5,20 @@ import os
 import pandas as pd
 import matplotlib.pyplot as plt 
 
+from makeCollation import make_collation
 from functions.createPlots import forecast_vs_actual_separate, \
     forecast_vs_actual_averaged, corr_vs_time_separate, \
     corr_vs_time_averaged, corr_vs_location, corr_vs_location_and_time
+from functions.collationUtils import clean_subfolders
 
 
-locations = os.listdir(os.getcwd() + "/data/collations/")
+clean_subfolders(os.getcwd() + "/data/history/")
+clean_subfolders(os.getcwd() + "/data/collations/")
+
+locations = os.listdir(os.getcwd() + "/data/forecasts/")
+for loc in locations:
+    make_collation(loc)
+
 collations_dict = dict((loc, 0) for loc in locations)
 
 file_name = "no_file_name"
