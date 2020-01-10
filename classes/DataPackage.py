@@ -2,7 +2,7 @@ import os
 import json
 from datetime import datetime
 
-from functions.convert_timestamp_format import convert_from_str_timestamps, \
+from functions.convertTimestampFormat import convert_from_str_timestamps, \
     convert_from_unix_timestamps
 
 
@@ -72,8 +72,9 @@ class Forecast(DataPackage):
     def calculate_number_of_hours_ahead(self):
         hours_ahead = []
         for ts in self.ts_unix:
+            now = datetime.now().replace(minute=0)
             hours_ahead.append(round((datetime.fromtimestamp(ts)
-                                      - datetime.now()).total_seconds()/3600))
+                                      - now).total_seconds()/3600))
 
         return hours_ahead
 
