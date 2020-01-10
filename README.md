@@ -20,9 +20,10 @@ The objective of this project is to download and analyze weather data in order t
 
 | Name             | Description                                                  |
 | ---------------- | ------------------------------------------------------------ |
-| Get_Forecast.py  | main script for acquiring forecast data from API             |
-| Get_Collation.py | main script for acquiring collations of forecasts and historical data for the further analysis |
-| getHistory.py    | file containing get_history() function which is called in order to acquire historical weather data from API |
+| Get_Forecast.py  | script for acquiring forecast data from API                  |
+| Get_Results.py   | script for generating plots based on comparing forecasts and history |
+| makeCollation.py | file containing make_collation( ) function which acquires collations of forecasts and historical data for the further analysis |
+| getHistory.py    | file containing get_history( ) function which is called in order to acquire historical weather data from API |
 
 
 
@@ -48,4 +49,9 @@ v1.4
 
 - Get_History transformed into a function
 - Make_Collation script added for preparing collations of forecasts and historical data in .csv files
+
+v1.5 
+
+- Plots generating implemented
+- Make_Collation.py transformed into a function called from Get_Results script
 
