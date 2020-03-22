@@ -112,8 +112,9 @@ def corr_vs_time_separate(collations_dict, period):
 
         corr_list = []
         for single_hour_list in paired_values_list:
-            corr_list.append(pearsonr(single_hour_list[0],
-                                      single_hour_list[1])[0])
+            if len(single_hour_list[0]) >= 2:
+                corr_list.append(pearsonr(single_hour_list[0],
+                                          single_hour_list[1])[0])
 
         paired_values_dict[loc] = paired_values_list
         corr_dict[loc] = corr_list
@@ -159,8 +160,9 @@ def corr_vs_time_averaged(collations_dict, period):
 
         corr_list = []
         for single_hour_list in paired_values_list:
-            corr_list.append(pearsonr(single_hour_list[0],
-                                      single_hour_list[1])[0])
+            if len(single_hour_list[0]) >= 2:
+                corr_list.append(pearsonr(single_hour_list[0],
+                                          single_hour_list[1])[0])
 
     fig = plt.figure(figsize=(11, 11))
     axis = fig.add_subplot(1, 1, 1)
@@ -235,9 +237,11 @@ def corr_vs_location_and_time(collations_dict, period):
 
         corr_list = []
         for s, single_hour_list in enumerate(paired_values_list):
-            corr_value = pearsonr(single_hour_list[0], single_hour_list[1])[0]
-            corr_list.append(corr_value)
-            corr_matrix[i, s] = corr_value
+            if len(single_hour_list[0]) >= 2:
+                corr_value \
+                    = pearsonr(single_hour_list[0], single_hour_list[1])[0]
+                corr_list.append(corr_value)
+                corr_matrix[i, s] = corr_value
 
         paired_values_dict[loc] = paired_values_list
         corr_dict[loc] = corr_list
